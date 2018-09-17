@@ -1,0 +1,118 @@
+'use strict';
+
+
+const config = require('../configs/db');
+const AWS = require("aws-sdk");
+const dynamo = module.exports;
+
+AWS.config.update({
+  accessKeyId: config.aws.accessKeyId,
+  region: config.aws.region,
+  secretAccessKey: config.aws.secretAccessKey,
+  endpoint: 'https://dynamodb.us-west-2.amazonaws.com'
+});
+const docClient = new AWS.DynamoDB.DocumentClient;
+const TableName = config.aws.dynamo.tables.name;
+
+/**
+ * Database method for creating a new contact
+ *
+ * @param req
+ * @param Promise
+ */
+dynamo.create = ({id, email, fname, lname, enabled, phone}) => {
+  const params = {
+    TableName,
+    Item: {
+      id,
+      email,
+      fname,
+      lname,
+      enabled,
+      phone
+    },
+    ConditionExpression:
+      'attribute_not_exists(id)'
+  };
+ return docClient.put(params).promise()
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      console.log(err);
+      return err;
+    })
+};
+
+/**
+ * Database method for getting all contacts
+ *
+ * @param req
+ * @param Promise
+ */
+dynamo.getAll = () => {
+  const params = {
+    TableName
+  };
+  return docClient.scan(params).promise()
+    .then((res) => {
+      return res.Items;
+    })
+    .catch((err) => {
+      console.log(err);
+      return err;
+    })
+};
+
+/**
+ * Database method for updating a new contact
+ *
+ * @param req
+ * @param Promise
+ */
+dynamo.update = ({id, email, fname, lname, enabled, phone}) => {
+  const params = {
+    TableName,
+    Item: {
+      id,
+      email,
+      fname,
+      lname,
+      enabled,
+      phone
+    },
+    ConditionExpression:
+      'attribute_exists(id)'
+  };
+  return docClient.put(params).promise()
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      console.log(err);
+      return err;
+    })
+};
+
+/**
+ * Database method for deleting a contact
+ *
+ * @param req
+ * @param Promise
+ */
+dynamo.delete = ({id}) => {
+  const params = {
+    TableName,
+    Key: {
+      id
+    }
+  };
+  return docClient.delete(params).promise()
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      console.log(err);
+      return err;
+    })
+};
