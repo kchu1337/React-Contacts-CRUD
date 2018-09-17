@@ -81,8 +81,8 @@ class ContactTable extends Component {
       .then(() =>{
         this.componentDidMount();
         })
-      .catch((err) =>{
-        console.log(err);
+      .catch(() =>{
+        alert('Error: Unable to delete contact');
       });
   };
 
@@ -115,8 +115,8 @@ class ContactTable extends Component {
       .then(() =>{
       this.componentDidMount();
       })
-      .catch((err) =>{
-        console.log(err);
+      .catch(() =>{
+        alert('Error: Unable to create/update contact');
       });
   };
 
@@ -129,8 +129,8 @@ class ContactTable extends Component {
           contacts : response.data
         })
       })
-      .catch((err) =>{
-        console.log(err);
+      .catch(() =>{
+        alert('Error: Unable to load contacts');
       });
   };
 
