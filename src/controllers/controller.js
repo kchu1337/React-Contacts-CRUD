@@ -13,7 +13,7 @@ controller.createContact = function createContact(req, res) {
   return dynamo
     .create(req.body)
     .then((response) => res.send(response))
-    .catch((err) => res.error(err));
+    .catch((err) => res.status(400).send(err));
 };
 
 /**
@@ -26,7 +26,7 @@ controller.getAllContacts = function getAllContacts(req, res) {
   return dynamo
     .getAll()
     .then((response) => res.send(response))
-    .catch((err) => res.error(err));
+    .catch((err) => res.status(400).send(err));
 };
 
 /**
@@ -39,11 +39,11 @@ controller.updateContact = function updateContact(req, res) {
   return dynamo
     .update(req.body)
     .then((response) => res.send(response))
-    .catch((err) => res.error(err));
+    .catch((err) => res.status(400).send(err));
 };
 
 /**
- * Controller method for updating a contact
+ * Controller method for deleting a contact
  *
  * @param req
  * @param res
@@ -51,6 +51,6 @@ controller.updateContact = function updateContact(req, res) {
 controller.deleteContact = function deleteContact(req, res) {
   return dynamo
     .delete(req.query)
-    .then((response) => res.send(response))
-    .catch((err) => res.error(err));
+    .then((response) => res.status(204).send(response))
+    .catch((err) => res.status(400).send(err));
 };

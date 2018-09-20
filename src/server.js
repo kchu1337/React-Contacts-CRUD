@@ -48,3 +48,5 @@ app.put('/api/', [
 app.delete('/api/', controller.deleteContact);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
+module.exports = app;

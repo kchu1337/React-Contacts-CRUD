@@ -1,7 +1,6 @@
 'use strict';
 
-
-const config = require('../configs/db');
+const config = require('../configs/config.js');
 const AWS = require("aws-sdk");
 const dynamo = module.exports;
 
@@ -11,8 +10,7 @@ AWS.config.update({
   secretAccessKey: config.aws.secretAccessKey,
   endpoint: 'https://dynamodb.us-west-2.amazonaws.com'
 });
-const docClient = new AWS.DynamoDB.DocumentClient;
-const TableName = config.aws.dynamo.tables.name;
+const DocumentClient = new AWS.DynamoDB.DocumentClient;
 
 /**
  * Database method for creating a new contact
@@ -21,6 +19,8 @@ const TableName = config.aws.dynamo.tables.name;
  * @param Promise
  */
 dynamo.create = ({id, email, fname, lname, enabled, phone}) => {
+  const docClient = new AWS.DynamoDB.DocumentClient;
+  const TableName = config.aws.dynamo.tables.name;
   const params = {
     TableName,
     Item: {
@@ -36,11 +36,10 @@ dynamo.create = ({id, email, fname, lname, enabled, phone}) => {
   };
  return docClient.put(params).promise()
     .then((res) => {
-      return res;
+      return Promise.resolve(res);
     })
     .catch((err) => {
-      console.log(err);
-      return err;
+      return Promise.reject(err);
     })
 };
 
@@ -51,16 +50,17 @@ dynamo.create = ({id, email, fname, lname, enabled, phone}) => {
  * @param Promise
  */
 dynamo.getAll = () => {
+  const docClient = new AWS.DynamoDB.DocumentClient;
+  const TableName = config.aws.dynamo.tables.name;
   const params = {
     TableName
   };
   return docClient.scan(params).promise()
     .then((res) => {
-      return res.Items;
+      return Promise.resolve(res.Items);
     })
     .catch((err) => {
-      console.log(err);
-      return err;
+      return Promise.reject(err);
     })
 };
 
@@ -71,6 +71,8 @@ dynamo.getAll = () => {
  * @param Promise
  */
 dynamo.update = ({id, email, fname, lname, enabled, phone}) => {
+  const docClient = new AWS.DynamoDB.DocumentClient;
+  const TableName = config.aws.dynamo.tables.name;
   const params = {
     TableName,
     Item: {
@@ -86,11 +88,10 @@ dynamo.update = ({id, email, fname, lname, enabled, phone}) => {
   };
   return docClient.put(params).promise()
     .then((res) => {
-      return res;
+      return Promise.resolve(res);
     })
     .catch((err) => {
-      console.log(err);
-      return err;
+      return Promise.reject(err);
     })
 };
 
@@ -101,6 +102,8 @@ dynamo.update = ({id, email, fname, lname, enabled, phone}) => {
  * @param Promise
  */
 dynamo.delete = ({id}) => {
+  const docClient = new AWS.DynamoDB.DocumentClient;
+  const TableName = config.aws.dynamo.tables.name;
   const params = {
     TableName,
     Key: {
@@ -109,10 +112,9 @@ dynamo.delete = ({id}) => {
   };
   return docClient.delete(params).promise()
     .then((res) => {
-      return res;
+      return Promise.resolve(res);
     })
     .catch((err) => {
-      console.log(err);
-      return err;
+      return Promise.reject(err);
     })
 };

@@ -12,7 +12,6 @@
     "express-validator": "^5.3.0",
     "foreman": "^3.0.1",
     "lodash": "^4.17.10",
-    "nodemon": "^1.18.4",
     "react": "^16.5.0",
     "react-bootstrap": "^0.32.4",
     "react-bootstrap-table-next": "^1.1.4",
@@ -23,9 +22,26 @@
     "reactable": "^1.1.0",
     "uuid": "^3.3.2"
   },
+  "devDependencies": {
+    "aws-sdk-mock": "^4.1.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "chai-http": "^4.2.0",
+    "fakerator": "^0.3.0",
+    "mocha": "^5.2.0",
+    "mock-express-request": "^0.2.2",
+    "mock-express-response": "^0.2.2",
+    "nodemon": "^1.18.4",
+    "nyc": "^13.0.1",
+    "proxyquire": "^2.1.0",
+    "sinon": "^6.3.3",
+    "sinon-chai": "^3.2.0"
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "start-prod": "nf start -p 3000",
+    "start": "NODE_ENV=prod nf start -p 3000",
+    "start-test": "NODE_ENV=test nf start -p 3000",
+    "test:unit": "NODE_ENV=test NODE_PATH=$NODE_PATH:. nyc --reporter=text-summary --reporter=lcov --report-dir=test/unit/reports/ mocha test/unit/ --exit",
+    "test:func": "NODE_ENV=test NODE_PATH=$NODE_PATH:. nyc --reporter=text-summary --reporter=lcov --report-dir=test/func/reports/ mocha test/func/ --exit",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
