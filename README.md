@@ -12,7 +12,7 @@ This is a simple CRUD app built in React to keep track of contact information.
 1. First clone the repo using `git clone https://github.com/kchu1337/React-Contacts-CRUD`
 2. Navigate to the repo's location.
 3. Run `npm install`.
-4. rename `sample_config.js` in `src/configs` to `config.js` and replace the AWS keys with your own. 
+4. rename `sample_config.js` in `src/configs` to `config.js` and replace the AWS keys with your own. The DynamoDB table should be created with a partition key named `id`.
 5. Run `npm start`. Note , you may need to install `foreman`. In which case first 
 run `npm install -g foreman` and then `npm start`.
 6. Open your web broswer to `localhost:5000`.
