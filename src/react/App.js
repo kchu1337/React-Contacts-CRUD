@@ -16,7 +16,7 @@ class App extends Component {
           <h2 className="App-subtitle">A web application to create, read, update, and delete contacts. Made in React </h2>
         </header>
         <p className="App-intro">
-          To update or delete a contact, double click the any part of the row of the contact and click on the update
+          To update or delete a contact, double click any part of the row of the contact and click on the update
           or delete button.
         </p>
         <ContactsTable/>

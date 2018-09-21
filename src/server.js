@@ -7,7 +7,7 @@ const { body } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 const generalValidator = require('./validators/general')
 const app = express();
-const port = 5000;
+const port = 5100;
 
 app.use(bodyParser.json());
 

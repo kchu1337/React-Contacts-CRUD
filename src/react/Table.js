@@ -183,7 +183,7 @@ class ContactTable extends Component {
             </form>
             <br/>
             <Button  bsStyle="success" onClick={this.update.bind(this)}>Update</Button>
-            <Button  bsStyle="danger" onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')){this.delete()} } }>Delete</Button>
+            <Button  bsStyle="danger" onClick={() => { if (window.confirm(`Are you sure you wish to delete the contact information for ${this.state.fname} ${this.state.lname}?`)){this.delete()} } }>Delete</Button>
             <Button  bsStyle="warning" onClick={this.hideModal}>Cancel</Button>
           </section>
         </div>
