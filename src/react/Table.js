@@ -86,10 +86,14 @@ class ContactTable extends Component {
       });
   };
 
-  //Generic input binding change function
+  //input binding change function
   handleInputChange({target}) {
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+
+    //Transforms enabled value from string to boolean
+    const value = target.name === 'enabled' ? (target.value === 'true') : target.value;
+
     const name = target.name;
+
     this.setState({
       [name]: value
     });
@@ -105,7 +109,7 @@ class ContactTable extends Component {
       lname,
       enabled,
       phone
-    }
+    };
     const method = (this.state.isCreateNew)? 'post':'put';
     axios({
       method,
@@ -169,12 +173,12 @@ class ContactTable extends Component {
               Enabled
               <br/>
               <Label htmlFor="radioTrue">True</Label>
-              <input type="radio" id ="radioTrue" name="enabled" value={"true"}
-                     checked={this.state.enabled === 'true'} onChange={this.handleInputChange.bind(this)}></input>
+              <input type="radio" id ="radioTrue" name="enabled" value={true}
+                     checked={this.state.enabled} onChange={this.handleInputChange.bind(this)}></input>
               {' '}
               <Label htmlFor="radioFalse">False</Label>
-            <input type="radio" id ="radioFalse" value="false" name="enabled"
-                   checked={this.state.enabled ==='false'} onChange={this.handleInputChange.bind(this)}></input>
+            <input type="radio" id ="radioFalse" name="enabled" value={false}
+                   checked={!this.state.enabled} onChange={this.handleInputChange.bind(this)}></input>
               <br/>
               <br/>
               <Label htmlFor="phone">Phone Number</Label>
@@ -182,8 +186,11 @@ class ContactTable extends Component {
               <input type="text" id="phone" value={this.state.phone} name = 'phone' onChange={this.handleInputChange.bind(this)}></input>
             </form>
             <br/>
-            <Button  bsStyle="success" onClick={this.update.bind(this)}>Update</Button>
-            <Button  bsStyle="danger" onClick={() => { if (window.confirm(`Are you sure you wish to delete the contact information for ${this.state.fname} ${this.state.lname}?`)){this.delete()} } }>Delete</Button>
+            {/*Changes the text based on whether the user is creating or updating. Also, only shows delete button when editing an existing contact*/}
+            <Button  bsStyle="success" onClick={this.update.bind(this)}>{this.state.isCreateNew?(<div>Create</div>):(<div>Update</div>)}</Button>
+            {!this.state.isCreateNew && (<Button  bsStyle="danger" onClick={() =>
+            { if (window.confirm(`Are you sure you wish to delete the contact information for ${this.state.fname} ${this.state.lname}?`)){this.delete()} } }>
+              Delete</Button>)}
             <Button  bsStyle="warning" onClick={this.hideModal}>Cancel</Button>
           </section>
         </div>
